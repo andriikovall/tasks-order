@@ -1,24 +1,3 @@
-export type Input = {
-  workers: Worker[];
-  tasks: Task[];
-};
-
-export type Output = {
-  /**
-   * The list of tasks that each worker must do with a minimal possible duration
-   * 
-   * Each task will surely we completed and the time will be minimal
-   */
-  result: Record<Worker['id'], Task[]>;
-};
-
-export const PRIORITIES = {
-  Low: 1,
-  Medium: 2,
-  High: 3,
-  Critical: 4,
-} as const;
-
 export type Task = {
   id: string;
   name: string;
@@ -37,6 +16,35 @@ export type Task = {
   canBeDoneBy: string[];
   priority: number;
 };
+
+/**
+ * It's not always possible
+ * to make all workers busy, so some of them
+ * can be idle during some periods of time
+ */
+export type IdleTask = Pick<Task, 'duration' | 'id'>;
+export type ResultTask = Task | IdleTask;
+
+export type Input = {
+  workers: Worker[];
+  tasks: Task[];
+};
+
+export type Output = {
+  /**
+   * The list of tasks that each worker must do with a minimal possible duration
+   *
+   * Each task will surely we completed and the time will be minimal
+   */
+  result: Record<Worker['id'], ResultTask[]>;
+};
+
+export const PRIORITIES = {
+  Low: 1,
+  Medium: 2,
+  High: 3,
+  Critical: 4,
+} as const;
 
 export type Worker = {
   id: string;
