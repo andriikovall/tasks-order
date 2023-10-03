@@ -1,0 +1,1 @@
+export { brutForce } from './brutForce';
