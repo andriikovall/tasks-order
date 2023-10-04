@@ -1,26 +1,53 @@
-import { Input, Output } from '../../types';
+import { Input, Output, ResultTask, Task } from '../../types';
+import { getDuration, getMaxDuration } from '../utils';
 
 /**
  * This method is theoretically correct for a small number of tasks and workers
  *
  * It uses the combinations method to find all possible combinations of tasks
  */
+// todo: add idle tasks here in the end results
+// todo: add dependencies management
 export const brutForce = (input: Input): Output => {
   const { workers, tasks } = input;
-  const rawResult = workers.reduce<Output['result']>((acc, worker) => {
-    const workerTasks = tasks.map(task => {
-      return {
-        ...task,
-        canBeDoneBy: task.canBeDoneBy.includes(worker.id),
-      };
-    });
-    return {
-      ...acc,
-      [worker.id]: workerTasks,
-    };
-  }, {});
-
+  const possibleResults = getAllPossibleTasksAssignments(tasks);
+  // todo: dependency management and then idle tasks
+  const bestResult = getShortestMaximalDuration(possibleResults);
   return {
-    result: {},
+    result: bestResult,
   };
+};
+
+const getShortestMaximalDuration = (
+  allPossibleTaskAssignments: Record<string, ResultTask[]>[],
+): Record<string, ResultTask[]> => {
+  return allPossibleTaskAssignments.reduce((shortest, current) => {
+    const currentMaxDuration = getMaxDuration(current);
+    const shortestMaxDuration = getMaxDuration(shortest);
+    return currentMaxDuration < shortestMaxDuration ? current : shortest;
+  }, allPossibleTaskAssignments[0]);
+};
+
+const getAllPossibleTasksAssignments = (
+  remainingTasks: Task[],
+  currentAssignment: Record<string, Task[]> = {},
+): Output['result'][] => {
+  if (remainingTasks.length === 0) {
+    return [currentAssignment];
+  }
+
+  const task = remainingTasks[0];
+  let results: Output['result'][] = [];
+
+  for (const workerId of task.canBeDoneBy) {
+    const tasksForWorker = [...(currentAssignment[workerId] || []), task];
+
+    const newAssignments = getAllPossibleTasksAssignments(remainingTasks.slice(1), {
+      ...currentAssignment,
+      [workerId]: tasksForWorker,
+    });
+    results = results.concat(newAssignments);
+  }
+
+  return results;
 };

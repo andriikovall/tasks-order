@@ -1,14 +1,13 @@
 import { Input, Output, ResultTask, Task } from '../../types';
 import { method } from '../method';
+import { getDuration } from '../utils';
 
-const getDuration = (tasks: ResultTask[]): number => {
-  return tasks.reduce((acc, task) => acc + task.duration, 0);
-};
-
-// todo: add tests for negative duration
 // when worker is not found
 // when task is not found to depend on
 // or simply describe what should happen in these cases
+
+// todo: test dependencies
+// todo: test idle
 describe('method', () => {
   it('should return an empty object if no workers or tasks are provided', () => {
     const input: Input = {
@@ -70,7 +69,69 @@ describe('method', () => {
     expect(actualOutput).toEqual(expectedOutput);
   });
 
-  it('should assign tasks to workers based on their priority', () => {
+  it('should assign tasks to worker based on their priority', () => {
+    const input: Input = {
+      workers: [
+        { id: '1', name: 'Worker 1' },
+      ],
+      tasks: [
+        {
+          id: '1',
+          name: 'Task 2',
+          duration: 2,
+          dependsOn: [],
+          canBeDoneBy: ['1'],
+          priority: 3,
+        },
+        {
+          id: '2',
+          name: 'Task 1',
+          duration: 1,
+          dependsOn: [],
+          canBeDoneBy: ['1'],
+          priority: 4,
+        },
+        {
+          id: '3',
+          name: 'Task 4',
+          duration: 4,
+          dependsOn: ['3'],
+          canBeDoneBy: ['1'],
+          priority: 1,
+        },
+        {
+          id: '4',
+          name: 'Task 3',
+          duration: 3,
+          dependsOn: [],
+          canBeDoneBy: ['1'],
+          priority: 2,
+        },
+      ],
+    };
+
+    const output = method(input);
+    expect(output).toMatchObject({
+      result: {
+        '1': [
+          {
+            priority: 4,
+          },
+          {
+            priority: 3,
+          },
+          {
+            priority: 2,
+          },
+          {
+            priority: 1,
+          },
+        ]
+      }
+    });
+  });
+
+  it('should assign tasks to workers based on their min time', () => {
     const input: Input = {
       workers: [
         { id: '1', name: 'Worker 1' },
