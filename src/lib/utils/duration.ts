@@ -1,4 +1,4 @@
-import { ResultTask } from '../types';
+import { ResultTask } from '../../types';
 
 export const getDuration = (tasks: ResultTask[]): number => {
   return tasks.reduce((acc, task) => acc + task.duration, 0);

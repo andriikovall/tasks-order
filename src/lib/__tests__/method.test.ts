@@ -1,6 +1,6 @@
 import { Input, Output, ResultTask, Task } from '../../types';
 import { method } from '../method';
-import { getDuration } from '../utils';
+import { getDuration } from '../utils/duration';
 
 // when worker is not found
 // when task is not found to depend on
@@ -95,7 +95,7 @@ describe('method', () => {
           id: '3',
           name: 'Task 4',
           duration: 4,
-          dependsOn: ['3'],
+          dependsOn: [],
           canBeDoneBy: ['1'],
           priority: 1,
         },
@@ -206,7 +206,7 @@ describe('method', () => {
           name: 'Task 3',
           duration: 3,
           dependsOn: ['2'],
-          canBeDoneBy: ['1', '2'],
+          canBeDoneBy: ['2'],
           priority: 3,
         },
       ],
@@ -241,7 +241,7 @@ describe('method', () => {
             name: 'Task 3',
             duration: 3,
             dependsOn: ['2'],
-            canBeDoneBy: ['1', '2'],
+            canBeDoneBy: ['2'],
             priority: 3,
           },
         ],

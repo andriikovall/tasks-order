@@ -1,18 +1,19 @@
 import { Input, Output, ResultTask, Task } from '../../types';
-import { getDuration, getMaxDuration } from '../utils';
+import { getDuration, getMaxDuration } from '../utils/duration';
 
 /**
  * This method is theoretically correct for a small number of tasks and workers
  *
  * It uses the combinations method to find all possible combinations of tasks
  */
+// todo: account priorities
 // todo: add idle tasks here in the end results
-// todo: add dependencies management
 export const brutForce = (input: Input): Output => {
   const { workers, tasks } = input;
-  const possibleResults = getAllPossibleTasksAssignments(tasks);
-  // todo: dependency management and then idle tasks
-  const bestResult = getShortestMaximalDuration(possibleResults);
+  const allPossibleResults = getAllPossibleTasksAssignments(tasks);
+  
+  // todo: add dependencies management
+  const bestResult = getShortestMaximalDuration(allPossibleResults);
   return {
     result: bestResult,
   };
