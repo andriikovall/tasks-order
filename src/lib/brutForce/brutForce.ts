@@ -1,5 +1,6 @@
 import { Input, Output, ResultTask, Task } from '../../types';
 import { getDuration, getMaxDuration } from '../utils/duration';
+import { visualize } from '../utils/visualisation';
 
 /**
  * This method is theoretically correct for a small number of tasks and workers
@@ -11,12 +12,34 @@ import { getDuration, getMaxDuration } from '../utils/duration';
 export const brutForce = (input: Input): Output => {
   const { workers, tasks } = input;
   const allPossibleResults = getAllPossibleTasksAssignments(tasks);
-  
-  // todo: add dependencies management
-  const bestResult = getShortestMaximalDuration(allPossibleResults);
+  const allPossibleResultsSortedByPriority =
+    sortAllTasksByPriorityInPlace(allPossibleResults);
+
+  // todo: add dependencies management and sort by priority before because priority is
+  // a key feature
+  const bestResult = getShortestMaximalDuration(
+    allPossibleResultsSortedByPriority,
+  );
+  console.log(visualize({ result: bestResult }));
   return {
     result: bestResult,
   };
+};
+
+const sortAllTasksByPriorityInPlace = (
+  notSorted: Record<string, Task[]>[],
+): Record<string, Task[]>[] => {
+  return notSorted.map(tasks => {
+    for (const workerId in tasks) {
+      const tasksForWorker = tasks[workerId];
+      sortByPriorityInPlace(tasksForWorker);
+    }
+    return tasks;
+  });
+};
+
+const sortByPriorityInPlace = (tasks: Task[]): void => {
+  tasks.sort((a, b) => b.priority - a.priority);
 };
 
 const getShortestMaximalDuration = (
@@ -32,21 +55,24 @@ const getShortestMaximalDuration = (
 const getAllPossibleTasksAssignments = (
   remainingTasks: Task[],
   currentAssignment: Record<string, Task[]> = {},
-): Output['result'][] => {
+): Record<string, Task[]>[] => {
   if (remainingTasks.length === 0) {
     return [currentAssignment];
   }
 
   const task = remainingTasks[0];
-  let results: Output['result'][] = [];
+  let results: Record<string, Task[]>[] = [];
 
   for (const workerId of task.canBeDoneBy) {
     const tasksForWorker = [...(currentAssignment[workerId] || []), task];
 
-    const newAssignments = getAllPossibleTasksAssignments(remainingTasks.slice(1), {
-      ...currentAssignment,
-      [workerId]: tasksForWorker,
-    });
+    const newAssignments = getAllPossibleTasksAssignments(
+      remainingTasks.slice(1),
+      {
+        ...currentAssignment,
+        [workerId]: tasksForWorker,
+      },
+    );
     results = results.concat(newAssignments);
   }
 

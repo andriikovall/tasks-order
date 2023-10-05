@@ -1,6 +1,7 @@
 import { Input, Output, ResultTask, Task } from '../../types';
 import { method } from '../method';
 import { getDuration } from '../utils/duration';
+import { visualize } from '../utils/visualisation';
 
 // when worker is not found
 // when task is not found to depend on
@@ -31,6 +32,7 @@ describe('method', () => {
           duration: 1,
           dependsOn: [],
           canBeDoneBy: ['1'],
+          dependents: [],
           priority: 1,
         },
         {
@@ -38,6 +40,7 @@ describe('method', () => {
           name: 'Task 2',
           duration: 2,
           dependsOn: [],
+          dependents: [],
           canBeDoneBy: ['1'],
           priority: 1,
         },
@@ -51,6 +54,7 @@ describe('method', () => {
             name: 'Task 1',
             duration: 1,
             dependsOn: [],
+            dependents: [],
             canBeDoneBy: ['1'],
             priority: 1,
           },
@@ -59,6 +63,7 @@ describe('method', () => {
             name: 'Task 2',
             duration: 2,
             dependsOn: [],
+            dependents: [],
             canBeDoneBy: ['1'],
             priority: 1,
           },
@@ -71,9 +76,7 @@ describe('method', () => {
 
   it('should assign tasks to worker based on their priority', () => {
     const input: Input = {
-      workers: [
-        { id: '1', name: 'Worker 1' },
-      ],
+      workers: [{ id: '1', name: 'Worker 1' }],
       tasks: [
         {
           id: '1',
@@ -81,6 +84,7 @@ describe('method', () => {
           duration: 2,
           dependsOn: [],
           canBeDoneBy: ['1'],
+          dependents: [],
           priority: 3,
         },
         {
@@ -89,6 +93,7 @@ describe('method', () => {
           duration: 1,
           dependsOn: [],
           canBeDoneBy: ['1'],
+          dependents: [],
           priority: 4,
         },
         {
@@ -97,6 +102,7 @@ describe('method', () => {
           duration: 4,
           dependsOn: [],
           canBeDoneBy: ['1'],
+          dependents: [],
           priority: 1,
         },
         {
@@ -105,6 +111,7 @@ describe('method', () => {
           duration: 3,
           dependsOn: [],
           canBeDoneBy: ['1'],
+          dependents: [],
           priority: 2,
         },
       ],
@@ -126,8 +133,8 @@ describe('method', () => {
           {
             priority: 1,
           },
-        ]
-      }
+        ],
+      },
     });
   });
 
@@ -144,6 +151,7 @@ describe('method', () => {
           duration: 2,
           dependsOn: [],
           canBeDoneBy: ['1', '2'],
+          dependents: [],
           priority: 3,
         },
         {
@@ -152,6 +160,7 @@ describe('method', () => {
           duration: 1,
           dependsOn: [],
           canBeDoneBy: ['1', '2'],
+          dependents: [],
           priority: 4,
         },
         {
@@ -159,6 +168,7 @@ describe('method', () => {
           name: 'Task 3',
           duration: 3,
           dependsOn: [],
+          dependents: [],
           canBeDoneBy: ['1', '2'],
           priority: 2,
         },
@@ -167,6 +177,7 @@ describe('method', () => {
           name: 'Task 4',
           duration: 4,
           dependsOn: ['3'],
+          dependents: [],
           canBeDoneBy: ['1', '2'],
           priority: 1,
         },
@@ -190,6 +201,7 @@ describe('method', () => {
           name: 'Task 1',
           duration: 1,
           dependsOn: [],
+          dependents: ['2'],
           canBeDoneBy: ['1', '2'],
           priority: 1,
         },
@@ -198,6 +210,7 @@ describe('method', () => {
           name: 'Task 2',
           duration: 2,
           dependsOn: ['1'],
+          dependents: ['3'],
           canBeDoneBy: ['1', '2'],
           priority: 2,
         },
@@ -206,6 +219,7 @@ describe('method', () => {
           name: 'Task 3',
           duration: 3,
           dependsOn: ['2'],
+          dependents: [],
           canBeDoneBy: ['2'],
           priority: 3,
         },
@@ -219,6 +233,7 @@ describe('method', () => {
             name: 'Task 1',
             duration: 1,
             dependsOn: [],
+            dependents: ['2'],
             canBeDoneBy: ['1', '2'],
             priority: 1,
           },
@@ -227,6 +242,7 @@ describe('method', () => {
             name: 'Task 2',
             duration: 2,
             dependsOn: ['1'],
+            dependents: ['3'],
             canBeDoneBy: ['1', '2'],
             priority: 2,
           },
@@ -241,6 +257,7 @@ describe('method', () => {
             name: 'Task 3',
             duration: 3,
             dependsOn: ['2'],
+            dependents: [],
             canBeDoneBy: ['2'],
             priority: 3,
           },
@@ -248,6 +265,8 @@ describe('method', () => {
       },
     };
     const actualOutput = method(input);
+    console.log('expectedOutput:\n', visualize(expectedOutput));
+    console.log('actualOutput:\n', visualize(actualOutput));
     expect(actualOutput).toEqual(expectedOutput);
   });
 });

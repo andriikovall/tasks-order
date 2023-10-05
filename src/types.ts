@@ -10,6 +10,7 @@ export type Task = {
    * Tasks that must be done before this task
    */
   dependsOn: string[];
+  dependents: string[];
   /**
    * Workers who can do this task
    */
