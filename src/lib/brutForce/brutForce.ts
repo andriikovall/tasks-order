@@ -7,20 +7,15 @@ import { visualize } from '../utils/visualisation';
  *
  * It uses the combinations method to find all possible combinations of tasks
  */
-// todo: account priorities
-// todo: add idle tasks here in the end results
+// todo: remove idle tasks when khitsko is OK with that
 export const brutForce = (input: Input): Output => {
   const { workers, tasks } = input;
   const allPossibleResults = getAllPossibleTasksAssignments(tasks);
   const allPossibleResultsSortedByPriority =
     sortAllTasksByPriorityInPlace(allPossibleResults);
-
-  // todo: add dependencies management and sort by priority before because priority is
-  // a key feature
   const bestResult = getShortestMaximalDuration(
     allPossibleResultsSortedByPriority,
   );
-  console.log(visualize({ result: bestResult }));
   return {
     result: bestResult,
   };
