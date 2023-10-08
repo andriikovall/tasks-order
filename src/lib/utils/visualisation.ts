@@ -1,5 +1,4 @@
-import { Output, ResultTask } from '../../types';
-import { isIdleTask, isRegularTask } from './type';
+import { Output, Task } from '../../types';
 
 export const visualize = (output: Output): string => {
   const tasksRows = Object.values(output.result);
@@ -7,13 +6,10 @@ export const visualize = (output: Output): string => {
   return result;
 };
 
-const visualizeRow = (tasks: ResultTask[]): string => {
+const visualizeRow = (tasks: Task[]): string => {
   return tasks.map(visualizeTask).join('--');
 };
 
-const visualizeTask = (task: ResultTask): string => {
-  const dependsOnSuffix = isRegularTask(task)
-    ? `(${task.dependsOn.join(',')})`
-    : '';
-  return `${`🏢`.repeat(task.duration)}${task.id}${dependsOnSuffix}`;
+const visualizeTask = (task: Task): string => {
+  return `${`🏢`.repeat(task.duration)}${task.id}`;
 };

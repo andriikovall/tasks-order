@@ -7,24 +7,11 @@ export type Task = {
    */
   duration: number;
   /**
-   * Tasks that must be done before this task
-   */
-  dependsOn: string[];
-  dependents: string[];
-  /**
    * Workers who can do this task
    */
   canBeDoneBy: string[];
   priority: number;
 };
-
-/**
- * It's not always possible
- * to make all workers busy, so some of them
- * can be idle during some periods of time
- */
-export type IdleTask = Pick<Task, 'duration' | 'id'>;
-export type ResultTask = Task | IdleTask;
 
 export type Input = {
   workers: Worker[];
@@ -37,7 +24,7 @@ export type Output = {
    *
    * Each task will surely we completed and the time will be minimal
    */
-  result: Record<Worker['id'], ResultTask[]>;
+  result: Record<Worker['id'], Task[]>;
 };
 
 export const PRIORITIES = {

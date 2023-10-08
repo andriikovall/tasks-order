@@ -1,11 +1,11 @@
-import { ResultTask } from '../../types';
+import { Task } from '../../types';
 
-export const getDuration = (tasks: ResultTask[]): number => {
+export const getDuration = (tasks: Task[]): number => {
   return tasks.reduce((acc, task) => acc + task.duration, 0);
 };
 
 export const getMaxDuration = (
-  output: Record<string, ResultTask[]>,
+  output: Record<string, Task[]>,
 ): number => {
   const durations = Object.values(output).map(getDuration);
   return Math.max(...durations);

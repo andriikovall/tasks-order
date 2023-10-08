@@ -1,4 +1,4 @@
-import { Input, Output, ResultTask, Task } from '../../types';
+import { Input, Output, Task } from '../../types';
 import { getDuration, getMaxDuration } from '../utils/duration';
 import { visualize } from '../utils/visualisation';
 
@@ -38,8 +38,8 @@ const sortByPriorityInPlace = (tasks: Task[]): void => {
 };
 
 const getShortestMaximalDuration = (
-  allPossibleTaskAssignments: Record<string, ResultTask[]>[],
-): Record<string, ResultTask[]> => {
+  allPossibleTaskAssignments: Record<string, Task[]>[],
+): Record<string, Task[]> => {
   return allPossibleTaskAssignments.reduce((shortest, current) => {
     const currentMaxDuration = getMaxDuration(current);
     const shortestMaxDuration = getMaxDuration(shortest);

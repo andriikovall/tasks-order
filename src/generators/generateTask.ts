@@ -10,7 +10,4 @@ export const generateTask = (canBeDoneBy: Task['canBeDoneBy']): Task => ({
     max: 5,
   }),
   priority: faker.number.int({ min: 1, max: 10 }),
-  // todo: remove
-  dependents: [],
-  dependsOn: [],
 });
