@@ -1,0 +1,1 @@
+export { vogelsApproximation } from './vogelsApproximation'

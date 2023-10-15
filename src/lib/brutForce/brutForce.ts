@@ -7,7 +7,6 @@ import { visualize } from '../utils/visualisation';
  *
  * It uses the combinations method to find all possible combinations of tasks
  */
-// todo: remove idle tasks when khitsko is OK with that
 export const brutForce = (input: Input): Output => {
   const { workers, tasks } = input;
   const allPossibleResults = getAllPossibleTasksAssignments(tasks);
