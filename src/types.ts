@@ -1,3 +1,8 @@
+export type Worker = {
+  id: string;
+  name: string;
+};
+
 export type Task = {
   id: string;
   name: string;
@@ -12,6 +17,8 @@ export type Task = {
   canBeDoneBy: string[];
   priority: number;
 };
+
+export type BaseItemMeta = Pick<Worker, 'id' | 'name'>;
 
 export type Input = {
   workers: Worker[];
@@ -33,8 +40,3 @@ export const PRIORITIES = {
   High: 3,
   Critical: 4,
 } as const;
-
-export type Worker = {
-  id: string;
-  name: string;
-};

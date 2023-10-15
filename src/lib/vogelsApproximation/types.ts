@@ -1,23 +1,21 @@
-import { Worker } from '../../types';
-
-type BaseCellRowOrColumn = Pick<Worker, 'id' | 'name'>;
+import { BaseItemMeta, Worker } from '../../types';
 
 export type TransportationProblemInput<
-  TSuppliers extends BaseCellRowOrColumn = BaseCellRowOrColumn,
-  TDestinations extends BaseCellRowOrColumn = BaseCellRowOrColumn,
+  TSupplier extends BaseItemMeta = BaseItemMeta,
+  TDestination extends BaseItemMeta = BaseItemMeta,
 > = {
-  suppliers: (TSuppliers & { supply: number })[];
-  demands: (TDestinations & { demand: number })[];
+  suppliers: (TSupplier & { supply: number })[];
+  demands: (TDestination & { demand: number })[];
   costs: number[][];
 };
 
 export type TransportationProblemOutput<
-  TSuppliers extends BaseCellRowOrColumn = BaseCellRowOrColumn,
-  TDestinations extends BaseCellRowOrColumn = BaseCellRowOrColumn,
+  TSupplier extends BaseItemMeta = BaseItemMeta,
+  TDestination extends BaseItemMeta = BaseItemMeta,
 > = {
   allocations: Array<{
-    supplier: TSuppliers;
-    destination: TDestinations;
-    allocatedAmount: number; 
+    supplier: TSupplier;
+    destination: TDestination;
+    allocatedAmount: number;
   }>;
 };
