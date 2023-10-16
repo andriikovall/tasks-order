@@ -4,10 +4,9 @@ import {
   TransportationProblemOutput,
 } from './types';
 
-// todo: test
 export const mapTasksInputToTransportationProblemInput = (
   input: Input,
-): TransportationProblemInput => {
+): TransportationProblemInput<Worker, Task> => {
   const costs = input.workers.map(worker => {
     return input.tasks.map(task => {
       if (task.canBeDoneBy.includes(worker.id)) {
@@ -20,12 +19,11 @@ export const mapTasksInputToTransportationProblemInput = (
   const suppliers = input.workers.map(worker => ({
     id: worker.id,
     name: worker.name,
-    supply: Number.POSITIVE_INFINITY,
+    supply: Number.MAX_SAFE_INTEGER,
   }));
 
   const demands = input.tasks.map(task => ({
-    id: task.id,
-    name: task.name,
+    ...task,
     demand: task.duration,
   }));
 
@@ -36,13 +34,12 @@ export const mapTasksInputToTransportationProblemInput = (
   };
 };
 
-// todo: test
 export const mapTransportationProblemOutputToTasksOutput = (
   output: TransportationProblemOutput<Worker, Task>,
 ): Output => {
   const result: Record<Worker['id'], Task[]> = {};
 
-  output.allocations.forEach(allocation => {
+  output?.allocations?.forEach(allocation => {
     if (!result[allocation.supplier.id]) {
       result[allocation.supplier.id] = [];
     }

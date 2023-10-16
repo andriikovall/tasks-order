@@ -7,8 +7,6 @@ import { visualize } from '../utils/visualisation';
 // when task is not found to depend on
 // or simply describe what should happen in these cases
 
-// todo: test dependencies
-// todo: test idle
 describe('method', () => {
   it('should return an empty object if no workers or tasks are provided', () => {
     const input: Input = {

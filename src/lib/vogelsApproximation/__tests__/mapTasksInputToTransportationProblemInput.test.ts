@@ -50,12 +50,12 @@ describe('mapTasksInputToTransportationProblemInput', () => {
       },
       output: {
         costs: [
-          [1, 2, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY],
-          [1, 2, 3, Number.POSITIVE_INFINITY],
+          [1, 2, Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER],
+          [1, 2, 3, Number.MAX_SAFE_INTEGER],
           [
-            Number.POSITIVE_INFINITY,
-            Number.POSITIVE_INFINITY,
-            Number.POSITIVE_INFINITY,
+            Number.MAX_SAFE_INTEGER,
+            Number.MAX_SAFE_INTEGER,
+            Number.MAX_SAFE_INTEGER,
             4,
           ],
         ],
@@ -67,9 +67,9 @@ describe('mapTasksInputToTransportationProblemInput', () => {
         ],
         suppliers: [
           // todo: think about MAX_SAFE_INTEGER of something like that
-          { id: '1', name: 'Worker 1', supply: Number.POSITIVE_INFINITY },
-          { id: '2', name: 'Worker 2', supply: Number.POSITIVE_INFINITY },
-          { id: '3', name: 'Worker 3', supply: Number.POSITIVE_INFINITY },
+          { id: '1', name: 'Worker 1', supply: Number.MAX_SAFE_INTEGER },
+          { id: '2', name: 'Worker 2', supply: Number.MAX_SAFE_INTEGER },
+          { id: '3', name: 'Worker 3', supply: Number.MAX_SAFE_INTEGER },
         ],
       },
     },

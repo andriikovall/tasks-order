@@ -10,8 +10,8 @@ export type TransportationProblemInput<
 };
 
 export type TransportationProblemOutput<
-  TSupplier extends BaseItemMeta,
-  TDestination extends BaseItemMeta,
+  TSupplier extends BaseItemMeta = BaseItemMeta,
+  TDestination extends BaseItemMeta = BaseItemMeta,
 > = {
   allocations: Array<{
     supplier: TSupplier;
