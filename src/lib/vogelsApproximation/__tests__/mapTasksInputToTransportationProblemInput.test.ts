@@ -66,7 +66,6 @@ describe('mapTasksInputToTransportationProblemInput', () => {
           { id: '4', name: 'Task 4', demand: 4 },
         ],
         suppliers: [
-          // todo: think about MAX_SAFE_INTEGER of something like that
           { id: '1', name: 'Worker 1', supply: Number.MAX_SAFE_INTEGER },
           { id: '2', name: 'Worker 2', supply: Number.MAX_SAFE_INTEGER },
           { id: '3', name: 'Worker 3', supply: Number.MAX_SAFE_INTEGER },

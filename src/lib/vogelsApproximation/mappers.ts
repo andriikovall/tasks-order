@@ -12,7 +12,7 @@ export const mapTasksInputToTransportationProblemInput = (
       if (task.canBeDoneBy.includes(worker.id)) {
         return task.duration;
       }
-      return Number.POSITIVE_INFINITY;
+      return Number.MAX_SAFE_INTEGER;
     });
   });
 

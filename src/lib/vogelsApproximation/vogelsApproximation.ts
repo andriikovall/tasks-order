@@ -5,52 +5,54 @@ import {
 } from './types';
 
 export const vogelsApproximation = (
-  input: TransportationProblemInput,
+  input: TransportationProblemInput<Worker, Task>,
 ): TransportationProblemOutput<Worker, Task> => {
-    const grid = input.costs;
-    const supply = input.suppliers.map(supplier => supplier.supply ? 100 : supplier.supply);
-    const demand = input.demands.map(demand => demand.demand > 1000 ? 1000 : demand.demand);
-    console.log('grid, supply, demand:', {grid, supply, demand});
-//   const grid = [
-//       [3, 1, 7, 4],
-//       [2, 6, 5, 9],
-//       [8, 3, 3, 2],
-//     ],
-//     supply = [300, 400, 500],
-//     demand = [250, 350, 400, 200];
+  const grid = input.costs;
+  const supply = input.suppliers.map(supplier => supplier.supply);
+  const demand = input.demands.map(demand => demand.demand);
 
   const res = vogelsApproximation2(grid, supply, demand);
-  console.log('res:', res);
-  return {} as TransportationProblemOutput<Worker, Task>;
+  return {
+    allocations: res.map(allocation => ({
+      supplier: input.suppliers[allocation.supplierIndex],
+      destination: input.demands[allocation.destinationIndex],
+      allocatedAmount: allocation.value,
+    })),
+  };
 };
 
 type Grid = number[][];
 type Supply = number[];
 type Demand = number[];
 
+type Allocation = {
+  supplierIndex: number;
+  destinationIndex: number;
+  value: number;
+};
+
 const INF = Number.MAX_SAFE_INTEGER;
 
-// todo: this works, we have to stick to it somehow
 const vogelsApproximation2 = (
   grid: Grid,
   supply: Supply,
   demand: Demand,
-): number => {
-  let n = grid.length;
-  let ans = 0;
+): Allocation[] => {
+  const n = grid.length;
+  const allocations: Allocation[] = [];
 
   function findDiff(grid: Grid): [number[], number[]] {
-    let rowDiff: number[] = [];
-    let colDiff: number[] = [];
+    const rowDiff: number[] = [];
+    const colDiff: number[] = [];
 
     for (let i = 0; i < grid.length; i++) {
-      let arr = [...grid[i]];
+      const arr = [...grid[i]];
       arr.sort((a, b) => a - b);
       rowDiff.push(arr[1] - arr[0]);
     }
 
     for (let col = 0; col < grid[0].length; col++) {
-      let arr: number[] = [];
+      const arr: number[] = [];
       for (let i = 0; i < grid.length; i++) {
         arr.push(grid[i][col]);
       }
@@ -58,22 +60,26 @@ const vogelsApproximation2 = (
       colDiff.push(arr[1] - arr[0]);
     }
 
-    // console.log('rowDiff, colDiff:', rowDiff, colDiff);
     return [rowDiff, colDiff];
   }
 
-  while (Math.max(...supply) !== 0 || Math.max(...demand) !== 0) {
-    let [row, col] = findDiff(grid);
-    let maxi1 = Math.max(...row);
-    let maxi2 = Math.max(...col);
+  while (Math.max(...demand) !== 0) {
+    console.log('demand:', demand, supply);
+    const [row, col] = findDiff(grid);
+    const maxi1 = Math.max(...row);
+    const maxi2 = Math.max(...col);
 
     if (maxi1 >= maxi2) {
-      let ind = row.findIndex(val => val === maxi1);
-      let mini1 = Math.min(...grid[ind]);
-      let ind2 = grid[ind].findIndex(val => val === mini1);
-      let mini2 = Math.min(supply[ind], demand[ind2]);
+      const ind = row.findIndex(val => val === maxi1);
+      const mini1 = Math.min(...grid[ind]);
+      const ind2 = grid[ind].findIndex(val => val === mini1);
+      const mini2 = Math.min(supply[ind], demand[ind2]);
 
-      ans += mini2 * mini1;
+      allocations.push({
+        supplierIndex: ind,
+        destinationIndex: ind2,
+        value: mini1,
+      });
       supply[ind] -= mini2;
       demand[ind2] -= mini2;
 
@@ -85,18 +91,22 @@ const vogelsApproximation2 = (
         grid[ind].fill(INF);
       }
     } else {
-      let ind = col.findIndex(val => val === maxi2);
+      const ind = col.findIndex(val => val === maxi2);
       let mini1 = INF;
 
       for (let j = 0; j < n; j++) {
         mini1 = Math.min(mini1, grid[j][ind]);
       }
 
-      let ind2 = grid.findIndex(row => row[ind] === mini1);
+      const ind2 = grid.findIndex(row => row[ind] === mini1);
       if (ind2 !== -1) {
-        let mini2 = Math.min(supply[ind2], demand[ind]);
+        const mini2 = Math.min(supply[ind2], demand[ind]);
 
-        ans += mini2 * mini1;
+        allocations.push({
+          supplierIndex: ind2,
+          destinationIndex: ind,
+          value: mini1,
+        });
         supply[ind2] -= mini2;
         demand[ind] -= mini2;
 
@@ -111,5 +121,5 @@ const vogelsApproximation2 = (
     }
   }
 
-  return ans;
+  return allocations;
 };

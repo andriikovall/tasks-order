@@ -1,3 +1,4 @@
+import { Task, Worker } from '../../../types';
 import {
   TransportationProblemInput,
   TransportationProblemOutput,
@@ -25,7 +26,7 @@ describe('vogelsApproximation', () => {
           { id: '1', name: 'Task 1', demand: 2 },
           { id: '2', name: 'Task 2', demand: 3 },
           { id: '3', name: 'Task 3', demand: 4 },
-          { id: '3', name: 'Task 4', demand: 5 },
+          { id: '4', name: 'Task 4', demand: 5 },
         ],
         suppliers: [
           { id: '1', name: 'Worker 1', supply: Number.MAX_SAFE_INTEGER },
@@ -37,47 +38,47 @@ describe('vogelsApproximation', () => {
         allocations: [
           {
             allocatedAmount: 2,
-            destination: {
+            destination: expect.objectContaining({
               id: '1',
               name: 'Task 1',
-            },
-            supplier: {
+            }),
+            supplier: expect.objectContaining({
               id: '1',
               name: 'Worker 1',
-            },
+            }),
           },
           {
             allocatedAmount: 3,
-            destination: {
+            destination: expect.objectContaining({
               id: '2',
               name: 'Task 2',
-            },
-            supplier: {
-              id: '3',
-              name: 'Worker 3',
-            },
+            }),
+            supplier: expect.objectContaining({
+              id: '2',
+              name: 'Worker 2',
+            }),
           },
           {
             allocatedAmount: 4,
-            destination: {
+            destination: expect.objectContaining({
               id: '3',
               name: 'Task 3',
-            },
-            supplier: {
+            }),
+            supplier: expect.objectContaining({
               id: '3',
               name: 'Worker 3',
-            },
+            }),
           },
           {
             allocatedAmount: 5,
-            destination: {
+            destination: expect.objectContaining({
               id: '4',
               name: 'Task 4',
-            },
-            supplier: {
+            }),
+            supplier: expect.objectContaining({
               id: '1',
               name: 'Worker 1',
-            },
+            }),
           },
         ],
       },
@@ -103,7 +104,7 @@ describe('vogelsApproximation', () => {
           { id: '1', name: 'Task 1', demand: 2 },
           { id: '2', name: 'Task 2', demand: 3 },
           { id: '3', name: 'Task 3', demand: 4 },
-          { id: '3', name: 'Task 4', demand: 5 },
+          { id: '4', name: 'Task 4', demand: 5 },
         ],
         suppliers: [
           { id: '1', name: 'Worker 1', supply: Number.MAX_SAFE_INTEGER },
@@ -115,47 +116,47 @@ describe('vogelsApproximation', () => {
         allocations: [
           {
             allocatedAmount: 2,
-            destination: {
+            destination: expect.objectContaining({
               id: '1',
               name: 'Task 1',
-            },
-            supplier: {
+            }),
+            supplier: expect.objectContaining({
               id: '1',
               name: 'Worker 1',
-            },
+            }),
           },
           {
             allocatedAmount: 3,
-            destination: {
+            destination: expect.objectContaining({
               id: '2',
               name: 'Task 2',
-            },
-            supplier: {
+            }),
+            supplier: expect.objectContaining({
               id: '1',
               name: 'Worker 1',
-            },
+            }),
           },
           {
             allocatedAmount: 4,
-            destination: {
+            destination: expect.objectContaining({
               id: '3',
               name: 'Task 3',
-            },
-            supplier: {
+            }),
+            supplier: expect.objectContaining({
               id: '1',
               name: 'Worker 1',
-            },
+            }),
           },
           {
             allocatedAmount: 5,
-            destination: {
+            destination: expect.objectContaining({
               id: '4',
               name: 'Task 4',
-            },
-            supplier: {
+            }),
+            supplier: expect.objectContaining({
               id: '1',
               name: 'Worker 1',
-            },
+            }),
           },
         ],
       },
@@ -192,7 +193,7 @@ describe('vogelsApproximation', () => {
           { id: '1', name: 'Task 1', demand: 2 },
           { id: '2', name: 'Task 2', demand: 3 },
           { id: '3', name: 'Task 3', demand: 4 },
-          { id: '3', name: 'Task 4', demand: 5 },
+          { id: '4', name: 'Task 4', demand: 5 },
         ],
         suppliers: [
           { id: '1', name: 'Worker 1', supply: Number.MAX_SAFE_INTEGER },
@@ -205,47 +206,47 @@ describe('vogelsApproximation', () => {
         allocations: [
           {
             allocatedAmount: 2,
-            destination: {
+            destination: expect.objectContaining({
               id: '1',
               name: 'Task 1',
-            },
-            supplier: {
+            }),
+            supplier: expect.objectContaining({
               id: '1',
               name: 'Worker 1',
-            },
+            }),
           },
           {
             allocatedAmount: 3,
-            destination: {
+            destination: expect.objectContaining({
               id: '2',
               name: 'Task 2',
-            },
-            supplier: {
+            }),
+            supplier: expect.objectContaining({
               id: '2',
               name: 'Worker 2',
-            },
+            }),
           },
           {
             allocatedAmount: 4,
-            destination: {
+            destination: expect.objectContaining({
               id: '3',
               name: 'Task 3',
-            },
-            supplier: {
+            }),
+            supplier: expect.objectContaining({
               id: '3',
               name: 'Worker 3',
-            },
+            }),
           },
           {
             allocatedAmount: 5,
-            destination: {
+            destination: expect.objectContaining({
               id: '4',
               name: 'Task 4',
-            },
-            supplier: {
+            }),
+            supplier: expect.objectContaining({
               id: '4',
               name: 'Worker 4',
-            },
+            }),
           },
         ],
       },
@@ -267,7 +268,7 @@ describe('vogelsApproximation', () => {
           { id: '1', name: 'Task 1', demand: 2 },
           { id: '2', name: 'Task 2', demand: 3 },
           { id: '3', name: 'Task 3', demand: 4 },
-          { id: '3', name: 'Task 4', demand: 5 },
+          { id: '4', name: 'Task 4', demand: 5 },
         ],
         suppliers: [
           { id: '1', name: 'Worker 1', supply: Number.MAX_SAFE_INTEGER },
@@ -279,48 +280,48 @@ describe('vogelsApproximation', () => {
       output: {
         allocations: [
           {
-            allocatedAmount: 2,
-            destination: {
-              id: '1',
-              name: 'Task 1',
-            },
-            supplier: {
-              id: '3',
-              name: 'Worker 3',
-            },
-          },
-          {
             allocatedAmount: 3,
-            destination: {
+            destination: expect.objectContaining({
               id: '2',
               name: 'Task 2',
-            },
-            supplier: {
-              id: '3',
-              name: 'Worker 3',
-            },
+            }),
+            supplier: expect.objectContaining({
+              id: '2',
+              name: 'Worker 2',
+            }),
           },
           {
-            allocatedAmount: 4,
-            destination: {
-              id: '3',
-              name: 'Task 3',
-            },
-            supplier: {
-              id: '3',
-              name: 'Worker 3',
-            },
+            allocatedAmount: 2,
+            destination: expect.objectContaining({
+              id: '1',
+              name: 'Task 1',
+            }),
+            supplier: expect.objectContaining({
+              id: '1',
+              name: 'Worker 1',
+            }),
           },
           {
             allocatedAmount: 5,
-            destination: {
+            destination: expect.objectContaining({
               id: '4',
               name: 'Task 4',
-            },
-            supplier: {
+            }),
+            supplier: expect.objectContaining({
+              id: '1',
+              name: 'Worker 1',
+            }),
+          },
+          {
+            allocatedAmount: 4,
+            destination: expect.objectContaining({
+              id: '3',
+              name: 'Task 3',
+            }),
+            supplier: expect.objectContaining({
               id: '3',
               name: 'Worker 3',
-            },
+            }),
           },
         ],
       },
@@ -337,7 +338,7 @@ describe('vogelsApproximation', () => {
           { id: '1', name: 'Task 1', demand: 2 },
           { id: '2', name: 'Task 2', demand: 3 },
           { id: '3', name: 'Task 3', demand: 4 },
-          { id: '3', name: 'Task 4', demand: 5 },
+          { id: '4', name: 'Task 4', demand: 5 },
         ],
         suppliers: [
           { id: '1', name: 'Worker 1', supply: Number.MAX_SAFE_INTEGER },
@@ -350,52 +351,54 @@ describe('vogelsApproximation', () => {
         allocations: [
           {
             allocatedAmount: 2,
-            destination: {
+            destination: expect.objectContaining({
               id: '1',
               name: 'Task 1',
-            },
-            supplier: {
-              id: '2',
-              name: 'Worker 2',
-            },
-          },
-          {
-            allocatedAmount: 3,
-            destination: {
-              id: '2',
-              name: 'Task 2',
-            },
-            supplier: {
-              id: '2',
-              name: 'Worker 2',
-            },
+            }),
+            supplier: expect.objectContaining({
+              id: '4',
+              name: 'Worker 4',
+            }),
           },
           {
             allocatedAmount: 4,
-            destination: {
+            destination: expect.objectContaining({
               id: '3',
               name: 'Task 3',
-            },
-            supplier: {
+            }),
+            supplier: expect.objectContaining({
               id: '4',
               name: 'Worker 4',
-            },
+            }),
+          },
+          {
+            allocatedAmount: 3,
+            destination: expect.objectContaining({
+              id: '2',
+              name: 'Task 2',
+            }),
+            supplier: expect.objectContaining({
+              id: '1',
+              name: 'Worker 1',
+            }),
           },
           {
             allocatedAmount: 5,
-            destination: {
+            destination: expect.objectContaining({
               id: '4',
               name: 'Task 4',
-            },
-            supplier: {
-              id: '2',
-              name: 'Worker 2',
-            },
+            }),
+            supplier: expect.objectContaining({
+              id: '1',
+              name: 'Worker 1',
+            }),
           },
         ],
       },
     },
   ])('should return correct output', ({ input, output }) => {
-    expect(vogelsApproximation(input)).toEqual(output);
+    expect(
+      vogelsApproximation(input as TransportationProblemInput<Worker, Task>),
+    ).toEqual(output);
   });
 });
