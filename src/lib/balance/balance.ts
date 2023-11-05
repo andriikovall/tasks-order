@@ -31,7 +31,7 @@ export const balance = (output: Output, numberOfWorkers?: number): Output => {
   let leastTimeWorkerIndex = 0;
   for (
     let i = workersSorted.length - 1;
-    i >= workersSorted.length - 1 - maxWorkersCount;
+    i > workersSorted.length - 1 - maxWorkersCount;
     i--
   ) {
     if (i <= leastTimeWorkerIndex) {
@@ -39,14 +39,18 @@ export const balance = (output: Output, numberOfWorkers?: number): Output => {
     }
     const [maxWorkerId, maxWorkerTasks] = workersSorted[i];
     const [minWorkerId, minWorkerTasks] = workersSorted[leastTimeWorkerIndex];
-    for (const task of maxWorkerTasks) {
+    for (let j = 0; j < maxWorkerTasks.length; j++) {
+      const task = maxWorkerTasks[j];
       if (
         task.canBeDoneBy.includes(minWorkerId) &&
-        timeCounts[maxWorkerId] - task.duration >
+        timeCounts[maxWorkerId] - task.duration >=
           timeCounts[minWorkerId] + task.duration
       ) {
         minWorkerTasks.push(task);
-        maxWorkerTasks.splice(maxWorkerTasks.indexOf(task), 1);
+        maxWorkerTasks.splice(j, 1);
+        // console.log('maxWorkerTasks:', maxWorkerTasks);
+        // console.log('minWorkerTasks:', minWorkerTasks);
+
         timeCounts[maxWorkerId] -= task.duration;
         timeCounts[minWorkerId] += task.duration;
       }
