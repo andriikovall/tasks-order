@@ -64,7 +64,7 @@ const vogelsApproximation2 = (
   }
 
   while (Math.max(...demand) !== 0) {
-    console.log('demand:', demand, supply);
+    // todo: fix failing for some reason
     const [row, col] = findDiff(grid);
     const maxi1 = Math.max(...row);
     const maxi2 = Math.max(...col);
