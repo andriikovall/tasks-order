@@ -14,9 +14,9 @@ export const method = (input: Input): Output => {
    * Empty list of workers or tasks: How the function behaves with no data.
    * Only one worker and multiple tasks, or only one task and multiple workers: This will test the extremes of a single row or single column.
    */
-  // return brutForce(input);
+  return brutForce(input);
   // TODO: doesn't work with 1 worker
-  return mapTransportationProblemOutputToTasksOutput(
-    vogelsApproximation(mapTasksInputToTransportationProblemInput(input)),
-  );
+  // return mapTransportationProblemOutputToTasksOutput(
+  //   vogelsApproximation(mapTasksInputToTransportationProblemInput(input)),
+  // );
 };

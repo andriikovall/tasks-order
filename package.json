@@ -7,6 +7,7 @@
     "start": "ts-node src/index",
     "test": "jest --coverage",
     "generate": "ts-node src/generate",
+    "benchmark": "ts-node src/benchmark",
     "type": "tsc --noEmit"
   },
   "keywords": [],

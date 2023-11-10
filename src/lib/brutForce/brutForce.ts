@@ -72,3 +72,4 @@ const getAllPossibleTasksAssignments = (
 
   return results;
 };
+

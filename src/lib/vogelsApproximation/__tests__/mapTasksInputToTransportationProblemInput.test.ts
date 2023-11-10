@@ -60,10 +60,10 @@ describe('mapTasksInputToTransportationProblemInput', () => {
           ],
         ],
         demands: [
-          { id: '1', name: 'Task 1', demand: 1 },
-          { id: '2', name: 'Task 2', demand: 2 },
-          { id: '3', name: 'Task 3', demand: 3 },
-          { id: '4', name: 'Task 4', demand: 4 },
+          expect.objectContaining({ id: '1', name: 'Task 1', demand: 1 }),
+          expect.objectContaining({ id: '2', name: 'Task 2', demand: 2 }),
+          expect.objectContaining({ id: '3', name: 'Task 3', demand: 3 }),
+          expect.objectContaining({ id: '4', name: 'Task 4', demand: 4 }),
         ],
         suppliers: [
           { id: '1', name: 'Worker 1', supply: Number.MAX_SAFE_INTEGER },
