@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node src/index",
     "test": "jest --coverage",
-    "generate": "ts-node scripts/generate",
+    "generate": "ts-node src/generate",
     "type": "tsc --noEmit"
   },
   "keywords": [],

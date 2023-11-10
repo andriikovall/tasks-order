@@ -49,9 +49,6 @@ export const balance = (output: Output, numberOfWorkers?: number): Output => {
         minWorkerTasks.push(task);
         maxWorkerTasks.splice(j, 1);
         j -= 1
-        // console.log('maxWorkerTasks:', maxWorkerTasks);
-        // console.log('minWorkerTasks:', minWorkerTasks);
-
         timeCounts[maxWorkerId] -= task.duration;
         timeCounts[minWorkerId] += task.duration;
       }
