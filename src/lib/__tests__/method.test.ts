@@ -64,62 +64,6 @@ describe('method', () => {
     expect(actualOutput).toEqual(expectedOutput);
   });
 
-  it('should assign tasks to worker based on their priority', () => {
-    const input: Input = {
-      workers: [{ id: '1', name: 'Worker 1' }],
-      tasks: [
-        {
-          id: '1',
-          name: 'Task 2',
-          duration: 2,
-          canBeDoneBy: ['1'],
-          priority: 3,
-        },
-        {
-          id: '2',
-          name: 'Task 1',
-          duration: 1,
-          canBeDoneBy: ['1'],
-          priority: 4,
-        },
-        {
-          id: '3',
-          name: 'Task 4',
-          duration: 4,
-          canBeDoneBy: ['1'],
-          priority: 1,
-        },
-        {
-          id: '4',
-          name: 'Task 3',
-          duration: 3,
-          canBeDoneBy: ['1'],
-          priority: 2,
-        },
-      ],
-    };
-
-    const output = method(input);
-    expect(output).toMatchObject({
-      result: {
-        '1': [
-          {
-            priority: 4,
-          },
-          {
-            priority: 3,
-          },
-          {
-            priority: 2,
-          },
-          {
-            priority: 1,
-          },
-        ],
-      },
-    });
-  });
-
   it('should assign tasks to workers based on their min time', () => {
     const input: Input = {
       workers: [

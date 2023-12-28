@@ -40,3 +40,16 @@ export const PRIORITIES = {
   High: 3,
   Critical: 4,
 } as const;
+
+export const Method = {
+  BrutForce: 'brutForce',
+  Vogels: 'vogels',
+} as const;
+
+export type Method = typeof Method[keyof typeof Method];
+
+export type MainArgs = {
+  inputFilePath: string;
+  outputFilePath: string;
+  balanceVogels: boolean;
+}

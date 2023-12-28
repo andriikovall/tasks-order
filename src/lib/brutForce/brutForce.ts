@@ -1,6 +1,5 @@
 import { Input, Output, Task } from '../../types';
-import { getDuration, getMaxDuration } from '../utils/duration';
-import { visualize } from '../utils/visualisation';
+import { getMaxDuration } from '../utils/duration';
 
 /**
  * This method is theoretically correct for a small number of tasks and workers
@@ -10,30 +9,13 @@ import { visualize } from '../utils/visualisation';
 export const brutForce = (input: Input): Output => {
   const { workers, tasks } = input;
   const allPossibleResults = getAllPossibleTasksAssignments(tasks);
-  const allPossibleResultsSortedByPriority =
-    sortAllTasksByPriorityInPlace(allPossibleResults);
   const bestResult = getShortestMaximalDuration(
-    allPossibleResultsSortedByPriority,
+    allPossibleResults,
   );
   return {
     result: bestResult,
   };
-};
-
-const sortAllTasksByPriorityInPlace = (
-  notSorted: Record<string, Task[]>[],
-): Record<string, Task[]>[] => {
-  return notSorted.map(tasks => {
-    for (const workerId in tasks) {
-      const tasksForWorker = tasks[workerId];
-      sortByPriorityInPlace(tasksForWorker);
-    }
-    return tasks;
-  });
-};
-
-const sortByPriorityInPlace = (tasks: Task[]): void => {
-  tasks.sort((a, b) => b.priority - a.priority);
+  // todo: generate tests for this with chat
 };
 
 const getShortestMaximalDuration = (

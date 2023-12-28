@@ -1,0 +1,4 @@
+export const CONFIG = {
+    MAX_BRUT_FORCE_WORK_UNITS: 50,
+    MAX_VOGELS_WORK_UNITS: 8000,
+}

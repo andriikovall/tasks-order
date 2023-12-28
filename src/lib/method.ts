@@ -1,4 +1,5 @@
-import { Input, Output } from '../types';
+import { CONFIG } from '../config';
+import { Input, Method, Output } from '../types';
 import { brutForce } from './brutForce';
 import { vogelsApproximation } from './vogelsApproximation';
 import {
@@ -6,17 +7,23 @@ import {
   mapTransportationProblemOutputToTasksOutput,
 } from './vogelsApproximation/mappers';
 
-export const method = (input: Input): Output => {
-  // todo: Add validation of input data here
-  /**
-   * A worker can't perform any tasks
-   * A task can't be performed by any worker
-   * Empty list of workers or tasks: How the function behaves with no data.
-   * Only one worker and multiple tasks, or only one task and multiple workers: This will test the extremes of a single row or single column.
-   */
-  return brutForce(input);
-  // TODO: doesn't work with 1 worker
-  // return mapTransportationProblemOutputToTasksOutput(
-  //   vogelsApproximation(mapTasksInputToTransportationProblemInput(input)),
-  // );
+export const method = (
+  input: Input,
+): Output & { method: Method; balanced?: boolean } => {
+  const workUnitsCount = input.workers.length * input.tasks.length;
+  if (workUnitsCount <= CONFIG.MAX_BRUT_FORCE_WORK_UNITS) {
+    return { ...brutForce(input), method: Method.BrutForce };
+  }
+  if (workUnitsCount > CONFIG.MAX_VOGELS_WORK_UNITS) {
+    throw new Error(
+      `Too many work units: ${workUnitsCount}. Max allowed: ${CONFIG.MAX_VOGELS_WORK_UNITS}`,
+    );
+  }
+  const transportProblemResult = vogelsApproximation(
+    mapTasksInputToTransportationProblemInput(input),
+  );
+  const tasksResult = mapTransportationProblemOutputToTasksOutput(
+    transportProblemResult,
+  );
+  return { ...tasksResult, method: Method.Vogels };
 };
