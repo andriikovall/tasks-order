@@ -1,5 +1,5 @@
 import minimist from 'minimist';
-import { generateInput } from "./generators/generateInput"
+import { generateInput } from "../generators/generateInput"
 import fs from 'fs';
 import path from 'path';
 
