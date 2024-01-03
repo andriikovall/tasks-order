@@ -34,6 +34,8 @@ export type Output = {
   result: Record<Worker['id'], Task[]>;
 };
 
+export type OutputWithMeta = Output & { method: Method; balanced?: boolean } 
+
 export const PRIORITIES = {
   Low: 1,
   Medium: 2,
@@ -52,4 +54,8 @@ export type MainArgs = {
   inputFilePath: string;
   outputFilePath: string;
   balanceVogels: boolean;
+}
+
+export type VisualizeArgs = {
+  inputFilePath: string;
 }

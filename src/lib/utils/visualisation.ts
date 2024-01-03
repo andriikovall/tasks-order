@@ -7,9 +7,10 @@ export const visualize = (output: Output): string => {
 };
 
 const visualizeRow = (tasks: Task[]): string => {
-  return tasks.map(visualizeTask).join('--');
+  const tasksString = tasks.map(visualizeTask).join('--')
+  return `W -> ${tasksString}`;
 };
 
 const visualizeTask = (task: Task): string => {
-  return `${`🏢`.repeat(task.duration)}${task.id}`;
+  return `${`🏢`.repeat(task.duration)}`;
 };

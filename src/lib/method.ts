@@ -1,5 +1,5 @@
 import { CONFIG } from '../config';
-import { Input, Method, Output } from '../types';
+import { Input, Method, Output, OutputWithMeta } from '../types';
 import { brutForce } from './brutForce';
 import { vogelsApproximation } from './vogelsApproximation';
 import {
@@ -9,7 +9,7 @@ import {
 
 export const method = (
   input: Input,
-): Output & { method: Method; balanced?: boolean } => {
+): OutputWithMeta => {
   const workUnitsCount = input.workers.length * input.tasks.length;
   if (workUnitsCount <= CONFIG.MAX_BRUT_FORCE_WORK_UNITS) {
     return { ...brutForce(input), method: Method.BrutForce };
