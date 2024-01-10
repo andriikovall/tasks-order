@@ -7,14 +7,14 @@ const argv = minimist(process.argv.slice(2));
 
 const workersCount = argv.w ?? 3
 const tasksCount = argv.t ?? 4
+const generatedDataPath = argv.o ?? path.join(__dirname, '../assets/generated.json')
 
 const generatedInput = generateInput(workersCount, tasksCount)
 
-const generatedDatPath = path.join(__dirname, './assets/generated.json')
-const generatedDataRaw = fs.readFileSync(generatedDatPath, 'utf-8')
-const generatedArray = JSON.parse(generatedDataRaw).concat(generatedInput)
+const generatedDataRaw = fs.existsSync(generatedDataPath) ? fs.readFileSync(generatedDataPath, 'utf-8') : '[]'
+const generatedArray = JSON.parse(generatedDataRaw || '[]').concat(generatedInput)
 const updatedDataRaw = JSON.stringify(generatedArray, null, 2)
-fs.writeFileSync(generatedDatPath, updatedDataRaw)
+fs.writeFileSync(generatedDataPath, updatedDataRaw)
 
 
 export { }

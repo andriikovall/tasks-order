@@ -54,6 +54,7 @@ export type MainArgs = {
   inputFilePath: string;
   outputFilePath: string;
   balanceVogels: boolean;
+  visual: boolean;
 }
 
 export type VisualizeArgs = {

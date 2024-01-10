@@ -15,7 +15,6 @@ export const brutForce = (input: Input): Output => {
   return {
     result: bestResult,
   };
-  // todo: generate tests for this with chat
 };
 
 const getShortestMaximalDuration = (

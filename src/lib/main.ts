@@ -1,5 +1,6 @@
 import arrify from 'arrify';
 import fs from 'fs';
+import { visualize } from './utils/visualisation';
 import { Input, MainArgs, Method } from '../types';
 import { method } from './method';
 import { balance } from './balance/balance';
@@ -29,4 +30,14 @@ export const main = (args: MainArgs) => {
     });
   }
   fs.writeFileSync(outputFilePath, JSON.stringify(results, null, 2));
+  if (args.visual) {
+    results.forEach((res) => {
+      if (res)  {
+        console.log('=====================================')
+        console.log(`Method: ${res.method} ${res.balanced ? 'balanced' : ''}`)
+        console.log(visualize(res))
+        console.log('=====================================')
+      }
+    })
+  }
 };

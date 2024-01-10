@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/index",
+    "start": "tsx src/index",
     "test": "jest --coverage",
-    "generate": "ts-node src/generate",
-    "benchmark": "ts-node src/benchmark",
+    "generate": "tsx src/lib/generate",
+    "benchmark": "tsx src/benchmark",
     "type": "tsc --noEmit"
   },
   "keywords": [],

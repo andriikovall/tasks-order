@@ -1,11 +1,6 @@
 import { Input, Output, Task } from '../../types';
 import { method } from '../method';
 import { getDuration } from '../utils/duration';
-import { visualize } from '../utils/visualisation';
-
-// when worker is not found
-// when task is not found to depend on
-// or simply describe what should happen in these cases
 
 describe('method', () => {
   it('should return an empty object if no workers or tasks are provided', () => {
