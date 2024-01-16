@@ -12,9 +12,8 @@ type WorkerID = string;
  * This is non pure function
  */
 export const balance = (output: Output, numberOfWorkers?: number): Output => {
-  // we are making the default number of the workers to balance to be 1/3 of the number of the workers
   const maxWorkersCount =
-    numberOfWorkers ?? Math.floor(Object.keys(output.result).length / 3);
+    numberOfWorkers ?? Math.floor(Object.keys(output.result).length);
 
   const timeCounts: Record<WorkerID, number> = {};
   const workersSorted: [WorkerID, Task[]][] = Object.entries(
@@ -28,33 +27,41 @@ export const balance = (output: Output, numberOfWorkers?: number): Output => {
     return aTime - bTime;
   });
 
+  const averageTime =
+    workersSorted.reduce(
+      (acc, [workerId]) => acc + timeCounts[workerId],
+      0,
+    ) / workersSorted.length;
+
   let leastTimeWorkerIndex = 0;
   for (
     let i = workersSorted.length - 1;
     i > workersSorted.length - 1 - maxWorkersCount;
     i--
   ) {
-    if (i <= leastTimeWorkerIndex) {
+    if (leastTimeWorkerIndex >= workersSorted.length - 1) {
       break;
     }
     const [maxWorkerId, maxWorkerTasks] = workersSorted[i];
     const [minWorkerId, minWorkerTasks] = workersSorted[leastTimeWorkerIndex];
+
+    if (timeCounts[maxWorkerId] <= averageTime) {
+      continue;
+    }
+
     for (let j = 0; j < maxWorkerTasks.length; j++) {
+      if (timeCounts[minWorkerId] >= averageTime) {
+        leastTimeWorkerIndex += 1;
+        i += 1;
+        break;
+      }
       const task = maxWorkerTasks[j];
-      if (
-        task.canBeDoneBy.includes(minWorkerId) &&
-        timeCounts[maxWorkerId] - task.duration >=
-          timeCounts[minWorkerId] + task.duration
-      ) {
+      if (task.canBeDoneBy.includes(minWorkerId)) {
         minWorkerTasks.push(task);
         maxWorkerTasks.splice(j, 1);
-        j -= 1
+        j -= 1;
         timeCounts[maxWorkerId] -= task.duration;
         timeCounts[minWorkerId] += task.duration;
-      }
-      if (timeCounts[maxWorkerId] <= timeCounts[minWorkerId]) {
-        leastTimeWorkerIndex += 1;
-        break;
       }
     }
   }

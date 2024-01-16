@@ -31,13 +31,13 @@ export const main = (args: MainArgs) => {
   }
   fs.writeFileSync(outputFilePath, JSON.stringify(results, null, 2));
   if (args.visual) {
-    results.forEach((res) => {
-      if (res)  {
-        console.log('=====================================')
-        console.log(`Method: ${res.method} ${res.balanced ? 'balanced' : ''}`)
-        console.log(visualize(res))
-        console.log('=====================================')
+    results.forEach(res => {
+      if (res) {
+        console.log('=====================================');
+        console.log(`Method: ${res.method} ${res.balanced ? 'balanced' : ''}`);
+        console.log(visualize(res));
+        console.log('=====================================');
       }
-    })
+    });
   }
 };

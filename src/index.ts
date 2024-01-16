@@ -1,11 +1,3 @@
-/**
- * Input file
- * Output file
- * method name
- * time
- *
- */
-
 import minimist from 'minimist';
 import path from 'path';
 import { MainArgs } from './types';
