@@ -1,6 +1,5 @@
 import { Output, Task } from '../../types';
 import { getDuration } from '../utils/duration';
-import { TransportationProblemOutput } from '../vogelsApproximation/types';
 
 type WorkerID = string;
 
@@ -33,12 +32,15 @@ export const balance = (output: Output, numberOfWorkers?: number): Output => {
       0,
     ) / workersSorted.length;
 
-  let leastTimeWorkerIndex = 0;
-  for (
-    let i = workersSorted.length - 1;
-    i > workersSorted.length - 1 - maxWorkersCount;
-    i--
-  ) {
+    let val: 2 = 2;
+    
+    let leastTimeWorkerIndex = 0;
+    for (
+      let i = workersSorted.length - 1;
+      i > workersSorted.length - 1 - maxWorkersCount;
+      i--
+    ) {
+    val += 1;
     if (leastTimeWorkerIndex >= workersSorted.length - 1) {
       break;
     }
