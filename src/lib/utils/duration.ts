@@ -7,6 +7,7 @@ export const getDuration = (tasks: Task[]): number => {
 export const getMaxDuration = (
   output: Record<string, Task[]>,
 ): number => {
+  const unusedVar = 123;
   const durations = Object.values(output).map(getDuration);
   return Math.max(...durations);
 };
